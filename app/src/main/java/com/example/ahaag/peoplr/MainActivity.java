@@ -7,13 +7,18 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener{
 
     final String drawerTitle= "Navigation";
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
+    String[] fragmentNames;
+    ListView drawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,17 @@ public class MainActivity extends Activity {
         };
         drawerLayout.setDrawerListener(drawerToggle);
 
+        //Setting up the values of the Sidebar menu (Home, My Profile, Matches, Settings)
+        fragmentNames=getResources().getStringArray(R.array.fragment_names);
+        drawerList = (ListView) findViewById(R.id.left_drawer);
+
+        //Sets the adapter of the list view for the side Drawer
+        drawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, fragmentNames));
+
+        //Listener for the drawer objects
+        drawerList.setOnItemClickListener(this);
+
     }
 
     @Override
@@ -69,6 +85,11 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    //onItemClick to handle placement of title on drawer
+    @Override
+    public void onItemClick(AdapterView parent, View view, int position, long id) {
+        getActionBar().setTitle(fragmentNames[position]);
+        drawerLayout.closeDrawer(drawerList);
+    }
 
 }

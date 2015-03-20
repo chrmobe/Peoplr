@@ -6,4 +6,10 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">closed</string>
 
+    <string-array name="fragment_names">
+        <item>Home</item>
+        <item>My Profile</item>
+        <item>Matches</item>
+        <item>Settings</item>
+    </string-array>
 </resources>
