@@ -1,5 +1,6 @@
 package com.example.ahaag.peoplr;
 
+//lolololol butts
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
@@ -11,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-
+//MOAR BUTTS
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener{
 
     final String drawerTitle= "Navigation";
