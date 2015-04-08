@@ -1,11 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'PeoplrKey'
+            keyPassword 'peoplr'
+            storeFile file('/Users/Patron/Android/peoplr.key.jks')
+            storePassword 'peoplr'
+        }
+    }
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
-
     defaultConfig {
-        applicationId "com.example.ahaag.peoplr"
+        applicationId 'com.cs407.ahaag.peoplr'
         minSdkVersion 19
         targetSdkVersion 21
         versionCode 1
@@ -15,7 +22,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+    }
+    productFlavors {
     }
 }
 
