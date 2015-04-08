@@ -11,6 +11,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.app.FragmentTransaction;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.login.widget.LoginButton;
+
+
 
 //MOAR BUTTS
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener{
@@ -20,10 +26,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     ActionBarDrawerToggle drawerToggle;
     String[] fragmentNames;
     ListView drawerList;
+    int fragPos=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_main);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -59,6 +68,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         //Listener for the drawer objects
         drawerList.setOnItemClickListener(this);
 
+        if(savedInstanceState==null){
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            MainFragment mainFragment=new MainFragment();
+            transaction.add(R.id.fragmentContainer,mainFragment).commit();
+        }
+
     }
 
     @Override
@@ -89,8 +104,28 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     //onItemClick to handle placement of title on drawer
     @Override
     public void onItemClick(AdapterView parent, View view, int position, long id) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        fragPos=position; //TODO IS THIS CORRECT???
+        switch(position){
+            case 0:
+                //switching the fragment
+                MainFragment mainFragment=new MainFragment();
+                transaction.replace(R.id.fragmentContainer,mainFragment).commit();
+                break;
+            //add other cases to replace fragment with correct fragment
+        }
         getActionBar().setTitle(fragmentNames[position]);
         drawerLayout.closeDrawer(drawerList);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(drawerList)) {
+            //changing the title back to the fragment currently on
+            getActionBar().setTitle(fragmentNames[fragPos]);
+            drawerLayout.closeDrawer(drawerList);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
